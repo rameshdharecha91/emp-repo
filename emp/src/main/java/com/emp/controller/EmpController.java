@@ -54,11 +54,23 @@ public class EmpController {
         return response;
     }
     @PutMapping(value = "/emp/edit/{empId}")
-    public Response<Employee> empUpdate(@RequestBody Employee employee,@PathVariable("empId") Integer empID){
-        Employee emp = employeeService.empUpdate(employee,empID);
+    public Response<Employee> empUpdate(@RequestBody Employee employee,@PathVariable("empId") Integer empId){
+        Employee emp = employeeService.empUpdate(employee,empId);
         Response<Employee> response;
         if(ObjectUtils.isEmpty(emp)){
            response = new Response<>(null,204,"NOT-FOUND");
+        }else{
+            response = new Response<>(emp,201,"OK");
+        }
+        return response;
+    }
+
+    @GetMapping(value = "/emp/{empId}")
+    public Response<Employee> getEmp(@PathVariable("empId") Integer empId){
+        Employee emp = employeeService.findById(empId);
+        Response<Employee> response;
+        if(ObjectUtils.isEmpty(emp)){
+            response = new Response<>(emp,204,"NOT-FOUND");
         }else{
             response = new Response<>(emp,201,"OK");
         }

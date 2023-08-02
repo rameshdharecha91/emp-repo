@@ -4,6 +4,7 @@ import com.emp.model.Employee;
 import com.emp.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,12 +25,16 @@ public class EmployeeService {
     EmployeeRepository employeeRepository;
 
     public Employee save(Employee employee){
-        Employee emp = employeeRepository.save(employee);
-        return emp;
+        return employeeRepository.save(employee);
     }
 
     public List<Employee> findAll() {
        return employeeRepository.findAll();
+    }
+    public Employee empUpdate(Employee employee, Integer empID) {
+        Optional<Employee> employeeOptional =  employeeRepository.findById(empID);
+        employee.setId(empID);
+        return employeeRepository.save(employee); // Save will do save and update
     }
 
     public Boolean empDelete(Integer empID){
@@ -43,12 +48,12 @@ public class EmployeeService {
        }
     }
 
-    public Employee empUpdate(Employee employee, Integer empID) {
-        Optional<Employee> employeeOptional =  employeeRepository.findById(empID);
+    public Employee findById(Integer empId) {
+        Optional<Employee> employeeOptional =  employeeRepository.findById(empId);
         if(employeeOptional.isPresent()){
-            employee.setId(empID);
-            return employeeRepository.save(employee); // Save will do save and update
+            return employeeOptional.get();
         }
         return null;
     }
+
 }
