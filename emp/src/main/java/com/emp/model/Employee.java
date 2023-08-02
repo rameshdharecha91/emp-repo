@@ -13,6 +13,8 @@ public class Employee {
 
     @Column(name = "sal")
     private Double sal;
+    @Column(name = "address")
+    private String address;
 
     public Integer getId() {
         return id;
@@ -36,5 +38,13 @@ public class Employee {
 
     public void setSal(Double sal) {
         this.sal = sal;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }
